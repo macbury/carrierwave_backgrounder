@@ -39,8 +39,8 @@ module CarrierWave
         #   end
         #
         def process_in_background(column, worker=::CarrierWave::Workers::ProcessAsset)
-          send :before_save, :"set_#{column}_processing", :if => :"trigger_#{column}_background_processing?"
-          send :after_save,  :"enqueue_#{column}_background_job", :if => :"trigger_#{column}_background_processing?"
+          send :before_create, :"set_#{column}_processing", :if => :"trigger_#{column}_background_processing?"
+          send :after_create,  :"enqueue_#{column}_background_job", :if => :"trigger_#{column}_background_processing?"
 
           class_eval  <<-RUBY, __FILE__, __LINE__ + 1
             attr_accessor :process_#{column}_upload
